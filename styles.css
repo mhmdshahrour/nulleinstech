@@ -37,11 +37,9 @@ body {
 
 .logo-wrapper img {
     max-width: 440px;
-    /* increased size */
     width: 100%;
     height: auto;
 }
-
 
 h1 {
     text-align: center;
@@ -124,14 +122,18 @@ textarea {
     font-size: 14px;
 }
 
+.consent input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+}
+
 button {
     margin-top: 32px;
     width: 100%;
     padding: 14px;
     font-size: 16px;
-    background: linear-gradient(135deg,
-            var(--primary),
-            var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -149,9 +151,8 @@ button:hover {
     margin-top: 16px;
     font-weight: 600;
     color: var(--primary-dark);
-
 }
-/* Mobile optimization */
+
 @media (max-width: 480px) {
     body {
         padding: 16px;
@@ -173,4 +174,9 @@ button:hover {
         flex-direction: column;
         gap: 12px;
     }
+}
+
+.input-error {
+    border-color: #dc2626 !important;
+    background-color: #fff5f5;
 }

@@ -4,17 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contactForm");
   const statusEl = document.getElementById("status");
 
-  if (!form || !statusEl) return;
-
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    statusEl.textContent = "";
     clearErrors();
+    statusEl.textContent = "";
 
-    if (!form.checkValidity()) {
-      showValidationErrors(form);
-      return;
-    }
+    if (!validateForm(form)) return;
 
     statusEl.textContent = "Sending message...";
 
@@ -29,26 +24,53 @@ document.addEventListener("DOMContentLoaded", () => {
         "Thank you. Your message has been successfully received.";
       form.reset();
 
-    } catch (error) {
-      console.error("EmailJS error:", error);
+    } catch (err) {
+      console.error(err);
       statusEl.textContent =
         "Something went wrong. Please try again later.";
     }
   });
 });
 
-/* --- Helpers --- */
+/* ---------- Validation ---------- */
 
-function showValidationErrors(form) {
-  const firstInvalid = form.querySelector(":invalid");
-  if (firstInvalid) {
-    firstInvalid.classList.add("input-error");
-    firstInvalid.focus();
-  }
+function validateForm(form) {
+  let valid = true;
+
+  form.querySelectorAll("[required]").forEach(field => {
+    const errorEl = field.nextElementSibling;
+
+    if (!field.checkValidity()) {
+      field.classList.add("input-error");
+
+      if (errorEl) {
+        if (field.validity.valueMissing) {
+          errorEl.textContent = "This field is required.";
+        } else if (field.type === "email") {
+          errorEl.textContent = "Please enter a valid email address.";
+        } else if (field.name === "message") {
+          errorEl.textContent = "Message must be at least 20 characters.";
+        } else if (field.type === "checkbox") {
+          errorEl.textContent = "You must agree before submitting.";
+        } else {
+          errorEl.textContent = "Please correct this field.";
+        }
+      }
+
+      if (valid) field.focus();
+      valid = false;
+    }
+  });
+
+  return valid;
 }
 
 function clearErrors() {
-  document
-    .querySelectorAll(".input-error")
-    .forEach(el => el.classList.remove("input-error"));
+  document.querySelectorAll(".input-error").forEach(el =>
+    el.classList.remove("input-error")
+  );
+  document.querySelectorAll(".error-message").forEach(el =>
+    el.textContent = ""
+  );
 }
+

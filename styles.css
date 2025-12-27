@@ -83,15 +83,24 @@ textarea {
 
 .radio-options {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
   margin-top: 10px;
 }
 
 .radio-item {
   display: flex;
   align-items: center;
-  gap: 10px;
   cursor: pointer;
+  padding: 6px 0;
+}
+
+/* iOS radio normalization */
+.radio-item input[type="radio"] {
+  margin: 0;
+  margin-right: 8px; /* 🔥 controls distance EXACTLY */
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .radio-item input {
@@ -161,3 +170,4 @@ button {
     flex-direction: column;
   }
 }
+

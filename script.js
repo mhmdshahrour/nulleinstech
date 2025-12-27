@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearErrors();
     statusEl.textContent = "";
 
-    if (!validateForm(form)) return;
+    if (!validate(form)) return;
 
     statusEl.textContent = "Sending message...";
 
@@ -23,38 +23,27 @@ document.addEventListener("DOMContentLoaded", () => {
       statusEl.textContent =
         "Thank you. Your message has been successfully received.";
       form.reset();
-
-    } catch (err) {
-      console.error(err);
+    } catch {
       statusEl.textContent =
         "Something went wrong. Please try again later.";
     }
   });
 });
 
-/* ---------- Validation ---------- */
-
-function validateForm(form) {
+function validate(form) {
   let valid = true;
 
-  form.querySelectorAll("[required]").forEach(field => {
-    const errorEl = field.nextElementSibling;
+  form.querySelectorAll("[required]").forEach((field) => {
+    const error = field.closest("div")?.querySelector(".error-message") ||
+                  field.parentElement.nextElementSibling;
 
     if (!field.checkValidity()) {
       field.classList.add("input-error");
 
-      if (errorEl) {
-        if (field.validity.valueMissing) {
-          errorEl.textContent = "This field is required.";
-        } else if (field.type === "email") {
-          errorEl.textContent = "Please enter a valid email address.";
-        } else if (field.name === "message") {
-          errorEl.textContent = "Message must be at least 20 characters.";
-        } else if (field.type === "checkbox") {
-          errorEl.textContent = "You must agree before submitting.";
-        } else {
-          errorEl.textContent = "Please correct this field.";
-        }
+      if (error) {
+        if (field.type === "email") error.textContent = "Please enter a valid email.";
+        else if (field.type === "checkbox") error.textContent = "You must agree before submitting.";
+        else error.textContent = "This field is required.";
       }
 
       if (valid) field.focus();
@@ -73,4 +62,3 @@ function clearErrors() {
     el.textContent = ""
   );
 }
-

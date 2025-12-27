@@ -34,16 +34,29 @@ function validate(form) {
   let valid = true;
 
   form.querySelectorAll("[required]").forEach((field) => {
-    const error = field.closest("div")?.querySelector(".error-message") ||
-                  field.parentElement.nextElementSibling;
+    let errorEl;
+
+    if (field.type === "checkbox") {
+      errorEl = field.closest(".consent")?.nextElementSibling;
+    } else {
+      errorEl = field.closest("div")?.querySelector(".error-message");
+    }
 
     if (!field.checkValidity()) {
       field.classList.add("input-error");
 
-      if (error) {
-        if (field.type === "email") error.textContent = "Please enter a valid email.";
-        else if (field.type === "checkbox") error.textContent = "You must agree before submitting.";
-        else error.textContent = "This field is required.";
+      if (errorEl) {
+        if (field.type === "email") {
+          errorEl.textContent = "Please enter a valid email address.";
+        } else if (field.type === "checkbox") {
+          errorEl.textContent =
+            "You must agree to the privacy policy before submitting.";
+        } else if (field.name === "message") {
+          errorEl.textContent =
+            "Please enter a message of at least 20 characters.";
+        } else {
+          errorEl.textContent = "This field is required.";
+        }
       }
 
       if (valid) field.focus();
@@ -54,6 +67,7 @@ function validate(form) {
   return valid;
 }
 
+
 function clearErrors() {
   document.querySelectorAll(".input-error").forEach(el =>
     el.classList.remove("input-error")
@@ -62,3 +76,4 @@ function clearErrors() {
     el.textContent = ""
   );
 }
+

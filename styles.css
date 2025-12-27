@@ -180,3 +180,14 @@ button:hover {
     border-color: #dc2626 !important;
     background-color: #fff5f5;
 }
+
+.error-message {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+}
+
+.input-error + .error-message {
+    display: block;
+}

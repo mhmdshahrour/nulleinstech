@@ -1,33 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-  emailjs.init("QfFQC01HJDSrbhk9A"); // PUBLIC KEY
+  emailjs.init("QfFQC01HJDSrbhk9A");
 
   const form = document.getElementById("contactForm");
   const statusEl = document.getElementById("status");
 
-  if (!form || !statusEl) {
-    console.error("Form or status element not found");
-    return;
-  }
+  if (!form || !statusEl) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    statusEl.textContent = "";
+    clearErrors();
+
+    if (!form.checkValidity()) {
+      showValidationErrors(form);
+      return;
+    }
+
     statusEl.textContent = "Sending message...";
 
     try {
       await emailjs.sendForm(
-        "service_opiby0o",     // SERVICE ID
-        "template_fc26sxq",    // TEMPLATE ID
+        "service_opiby0o",
+        "template_fc26sxq",
         form
       );
 
       statusEl.textContent =
-        "Thank you! Your message has been received. The NullEinsTech team will contact you shortly.";
+        "Thank you. Your message has been successfully received.";
       form.reset();
 
     } catch (error) {
       console.error("EmailJS error:", error);
       statusEl.textContent =
-        "Failed to send message. Please try again later.";
+        "Something went wrong. Please try again later.";
     }
   });
 });
+
+/* --- Helpers --- */
+
+function showValidationErrors(form) {
+  const firstInvalid = form.querySelector(":invalid");
+  if (firstInvalid) {
+    firstInvalid.classList.add("input-error");
+    firstInvalid.focus();
+  }
+}
+
+function clearErrors() {
+  document
+    .querySelectorAll(".input-error")
+    .forEach(el => el.classList.remove("input-error"));
+}

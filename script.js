@@ -14,19 +14,34 @@ document.addEventListener("DOMContentLoaded", () => {
     statusEl.textContent = "Sending message...";
 
     try {
-      await emailjs.sendForm(
-        "service_opiby0o",
-        "template_fc26sxq",
-        form
-      );
+// 1️⃣ Send message to you
+await emailjs.sendForm(
+  "service_opiby0o",
+  "template_fc26sxq",
+  form
+);
+
+// 2️⃣ Send auto-reply to user (non-blocking)
+emailjs.send(
+  "service_opiby0o",
+  "template_bjppy78",
+  {
+    full_name: form.full_name.value,
+    email: form.email.value,
+    subject: form.subject.value,
+    preferred_contact: form.preferred_contact.value
+  }
+).catch(err => console.warn("Auto-reply failed:", err));
+
 
       statusEl.textContent =
         "Thank you. Your message has been successfully received.";
       form.reset();
-    } catch {
-      statusEl.textContent =
-        "Something went wrong. Please try again later.";
-    }
+    } catch (error) {
+  console.error("EmailJS error:", error);
+  statusEl.textContent =
+    "Something went wrong. Please try again later.";
+}
   });
 });
 function validate(form) {
@@ -85,5 +100,6 @@ function clearErrors() {
     el.style.display = "none";
   });
 }
+
 
 

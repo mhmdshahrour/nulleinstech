@@ -1,0 +1,152 @@
+:root {
+    --primary: #0aa6b4;
+    --secondary: #c6d400;
+    --primary-dark: #0a3f46;
+    --text-dark: #334155;
+    --bg-light: #f4f7f8;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    background: var(--bg-light);
+    margin: 0;
+    padding: 40px;
+    color: var(--text-dark);
+}
+
+.container {
+    max-width: 720px;
+    margin: auto;
+}
+
+.form-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+}
+
+.logo-wrapper {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.logo-wrapper img {
+    max-width: 440px;
+    /* increased size */
+    width: 100%;
+    height: auto;
+}
+
+
+h1 {
+    text-align: center;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #556;
+    margin-bottom: 32px;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.radio-group {
+    margin-top: 24px;
+}
+
+.radio-title {
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.radio-options {
+    display: flex;
+    gap: 24px;
+    margin-top: 10px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.radio-item input {
+    accent-color: var(--primary);
+}
+
+.consent {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 32px;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    background: linear-gradient(135deg,
+            var(--primary),
+            var(--secondary));
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(10, 166, 180, 0.35);
+}
+
+.status {
+    margin-top: 16px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}

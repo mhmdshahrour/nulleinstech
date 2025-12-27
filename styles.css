@@ -109,6 +109,7 @@ textarea {
 
 .consent {
   display: flex;
+  align-items: center; /* 🔥 centers checkbox vertically */
   gap: 10px;
   margin-top: 24px;
   font-size: 14px;
@@ -170,4 +171,5 @@ button {
     flex-direction: column;
   }
 }
+
 
